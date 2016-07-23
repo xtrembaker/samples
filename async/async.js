@@ -25,5 +25,5 @@ var afterQuery = function afterQuery(err, results){
 };
 
 // Don't know how to async only one function, so series needs an array of function
-// /!\ Do not use each since we want to get results in the final callback
+// /!\ Do not use ".each" since we want to get results in the final callback
 async.series([query], afterQuery);
