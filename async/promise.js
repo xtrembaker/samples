@@ -1,8 +1,6 @@
 var Sequelize = require('sequelize');
-var async = require('async');
 
 // Version using Promise
-var Sequelize = require('sequelize');
 var sequelize = new Sequelize('mysql', 'root', '', {
   'dialect' : 'mysql'
 });
