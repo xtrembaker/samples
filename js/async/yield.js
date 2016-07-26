@@ -27,3 +27,6 @@ function* main(){
 var it = main();
 // Process until the first "yield"
 it.next();
+
+//-------------------
+// TO SUMMARY : Yield wait until the "next" function is called to processing the program
