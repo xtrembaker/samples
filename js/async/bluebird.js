@@ -3,46 +3,82 @@
 // NOT DONE YET !
 //
 //#########################
+// var Sequelize = require('sequelize');
+// var Promise = require("bluebird");
+//
+// function PingPong() {
+//
+// }
+//
+// PingPong.prototype.ping = function(val){
+//   var self = this;
+//   function* ping(val){
+//     console.log("Ping?", val)
+//     yield Promise.delay(500).then(function() {
+//         p.next();
+//     })
+//     self.pong(val+1);
+//   };
+//   var p = ping(val);
+//   p.next();
+//   //p.next();
+// };
+//
+// // PingPong.prototype.ping = Promise.coroutine(function* (val) {
+// //     console.log("Ping?", val)
+// //     yield Promise.delay(500)
+// //     this.pong(val+1);
+// // });
+//
+// PingPong.prototype.pong = Promise.coroutine(function* (val) {
+//     console.log("Pong!", val)
+//     yield Promise.delay(500);
+//     this.ping(val+1)
+// });
+//
+// var a = new PingPong();
+// a.ping(0);
+
+
+
 var Sequelize = require('sequelize');
 var Promise = require('bluebird');
-// Version using Promise
+// Version of callback
 var sequelize = new Sequelize('mysql', 'root', '', {
   'dialect' : 'mysql'
 });
 
-// var query = function *query () {
-//     console.log("Query !");
-//     var result = [];
-//     return sequelize.query('SELECT 1+1 as count', { type: sequelize.QueryTypes.SELECT}).then(function(results){
-//       result = results[0].count;
-//     }).catch(function(err){
-//       //reject(err);
-//     });
-//     console.log('result :',result);
-//     return result;
-// };
-// //
-// var afterQuery = function afterQuery(count){
-//   console.log('Count equal :' + count);
-//   sequelize.close();
-// };
-//
-// var response = yield query();
-// response.next();
-// console.log(count);
-// afterQuery(count);
-//console.log('right after !');
+// Do the query
+var query = function query(){
+    sequelize.query('SELECT 1+1 as count', { type: sequelize.QueryTypes.SELECT}).then(function (results){
+      // As soon as results are found, pass it to the iterator as next value
+      // it.next(results);
+      Promise.resolve(results);
+    });
+};
 
+var afterQuery = function afterQuery(count){
+  console.log('Count equal :' + count);
+  sequelize.close();
+};
 
+var main = Promise.coroutine(function* (val) {
+  yield sequelize.query('SELECT 1+1 as count', { type: sequelize.QueryTypes.SELECT}).then(function (results){
+    // As soon as results are found, pass it to the iterator as next value
+    // it.next(results);
+    Promise.resolve(results);
+  });
+  // var results = yield query();
+  // afterQuery(results);
+});
 
-function *main() {
-    var result1 = yield request( "http://some.url.1" );
-    var data = JSON.parse( result1 );
+// function main(){
+//   // Wait for the "next" to be call
+//   var results = yield query();
+//   afterQuery(results);
+// }
 
-    var result2 = yield request( "http://some.url.2?id=" + data.id );
-    var resp = JSON.parse( result2 );
-    console.log( "The value you asked for: " + resp.value );
-}
+main();
 
-var it = main();
-it.next();
+//-------------------
+// TO SUMMARY : Yield wait until the "next" function is called to processing the program
