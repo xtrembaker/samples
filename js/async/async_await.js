@@ -8,6 +8,7 @@ var max = 10;
  * @returns {Promise}
  */
 function fetch(){
+    throw Error('toto');
     return new Promise(function(resolve, reject){
         setTimeout(function(){
             resolve();
@@ -21,15 +22,37 @@ function fetch(){
  */
 async function trigger(){
     throw "erreur";
-    var result = await fetch();
-    console.log('i : ', i);
-    if(i < max){
-        i++;
-        trigger();
+    try {
+        //var result = await fetch();
+        console.log('i : ', i);
+        if(i < max){
+            i++;
+            trigger();
+        }
+    }catch (err){
+        console.log('log');
+
     }
+
 }
 
-trigger();
+//trigger()
+    //.catch(function () {
+    //console.log('caught !');
+//});
+
+
+async function asyncFun () {
+    var value = await Promise
+        .resolve(1)
+        .then(x => x * 3)
+        .then(x => x + 5)
+        .then(x => x / 2);
+    return value;
+}
+asyncFun().then(x => console.log(`x: ${x}`));
+
+
 
 
 
