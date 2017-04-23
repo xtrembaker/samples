@@ -9,3 +9,8 @@ Delayed messages : https://www.rabbitmq.com/blog/2015/04/16/scheduling-messages-
 
 Start daemon on MacOSX :
 docker run -d -p5672:5672 --hostname my-rabbit --name some-rabbit rabbitmq:3
+
+
+Exchange :
+php exchange/emit_logs.php 
+php exchange/receive_logs.php
