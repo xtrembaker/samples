@@ -1,4 +1,4 @@
-==<?php
+<?php
 require_once __DIR__ . '/vendor/autoload.php';
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Wire\AMQPTable;
@@ -6,7 +6,7 @@ use PhpAmqpLib\Wire\AMQPTable;
 /**
  * To use : php receive.php
  *
- * For test purpose only : If message contain "Coucou4" and the message
+ * For test purpose only : If message contain "Coucou4" and the message
  * was created less than 15 seconds, we requeue the message
  */
 $connection = new AMQPStreamConnection('localhost', 5672, 'guest', 'guest');
