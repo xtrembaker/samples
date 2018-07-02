@@ -9,7 +9,7 @@ require './config.php';
 $connection = new AMQPStreamConnection(HOST, PORT, USER, PASS);
 $channel = $connection->channel();
 
-$queueName = 'queue_toto';
+$queueName = 'budgea_webhook';
 $passive = false;//what's this ?
 $durable = true;
 $exclusive = false; // we don't want the queue to be accessed only by the current connection
@@ -24,7 +24,14 @@ $noWait = false; //what's this ?
 
 $callback = function (AMQPMessage $message)use($channel){
     echo "body: ".$message->getBody()."\n";
+    // simulate service not available
+    if(rand(0,9) % 2 === 0){
+        echo "Service not available, send message to delay queue\n";
+        $channel->basic_publish($message,'','delay_queue');
+        return;
+    }
     $channel->basic_ack($message->delivery_info['delivery_tag']);
+    echo "Done \n";
 };
 
 $channel->basic_consume($queueName, '', $noLocal, $noAck, $exclusive, $noWait, $callback);
