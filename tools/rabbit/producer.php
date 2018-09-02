@@ -25,6 +25,6 @@ $channel->queue_declare('delay_queue',false,true,false,false,false
 );
 
 $properties = array('content_type' => 'text/plain', 'delivery_mode' => AMQPMessage::DELIVERY_MODE_PERSISTENT);
-$body = json_encode(['accounts' => [['transactions' => [['value' => 10]]]]]);
+$body = json_encode(['accounts' => [['transactions' => [['value' => time()]]]]]);
 $msg = new AMQPMessage($body, $properties);
 $channel->basic_publish($msg, '', $queueName);

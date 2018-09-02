@@ -17,13 +17,13 @@ $channel->exchange_declare('logs', 'x-delayed-message', false, false, false, fal
 
 
 $data = implode(' ', array_slice($argv, 1));
-if(empty($data)) $data = "info: Hello World!";
+if(empty($data)) $data = "Coucou4";
 $msg = new AMQPMessage($data);
 
 
 $option = getopt("m:");
 
-$headers = new AMQPTable(array("x-delay" => 15000));
+$headers = new AMQPTable(array("x-delay" => 5000));
 $msg->set('application_headers', $headers);
 $channel->basic_publish($msg, '', 'hello');
 
