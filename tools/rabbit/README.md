@@ -21,3 +21,8 @@ php exchange/receive_logs.php
 
 
 https://gagnechris.wordpress.com/2015/09/19/easy-retries-with-rabbitmq/
+
+
+
+A FAIRE:
+- bouger le qos

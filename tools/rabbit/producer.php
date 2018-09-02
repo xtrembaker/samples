@@ -23,6 +23,8 @@ $channel->queue_declare('delay_queue',false,true,false,false,false
     , 'x-dead-letter-routing-key'=>array('S',$queueName)
     )
 );
+$channel->exchange_declare('direct', 'direct');
+$channel->queue_bind($queueName, 'direct');
 
 $properties = array('content_type' => 'text/plain', 'delivery_mode' => AMQPMessage::DELIVERY_MODE_PERSISTENT);
 $body = json_encode(['accounts' => [['transactions' => [['value' => time()]]]]]);
