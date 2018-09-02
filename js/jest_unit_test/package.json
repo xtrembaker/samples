@@ -8,7 +8,8 @@
     "jest": "^21.0.2"
   },
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "test.unit": "TZ='Europe/Paris' ./node_modules/.bin/jest"
   },
   "author": "",
   "license": "ISC"
