@@ -22,7 +22,21 @@ php exchange/receive_logs.php
 
 https://gagnechris.wordpress.com/2015/09/19/easy-retries-with-rabbitmq/
 
-
+En mode "direct" on peut utiliser le routing key
 
 A FAIRE:
 - bouger le qos
+
+Trouver des réponses:
+- Qu'est-ce qu'un channel ?
+- Qu'est -ce que le state d'une queue "ready / idle" ?
+
+
+
+- basic_nack: manually unack a message
+- basic_reject: Was introduced before basic_nack, but is less powerful
+- batch_basic_publish: Prepare messages as a batch
+- publish_batch:  Once you've send your batch using "batch_basic_publish", use that function to publish all of them
+- tx_select: start transaction
+- tx_commit: commit transaction (after publish_batch)
+- tx_rollback: rollback transaction

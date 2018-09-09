@@ -8,15 +8,11 @@ require './../../config.php';
 
 $connection = new AMQPStreamConnection(HOST, PORT, USER, PASS);
 $channel = $connection->channel();
-
+$channel->exchange_declare('direct_exchange', 'direct', false, true, false, false, false);
+// DECLARE QUEUE
 $queueName = 'first_queue';
-$passive = false;//what's this ?
-$durable = true;
-$exclusive = false; // we don't want the queue to be accessed only by the current connection
-$autoDelete = false; // we don't want the queue to be delete once the connection closes
-$noWait = false; //what's this ?
-$channel->queue_declare($queueName, $passive, $durable, $exclusive, $autoDelete, $noWait);
-$channel->basic_qos(null, 1, null);
+$channel->queue_declare($queueName, false, true, false, false);
+// DECLARE CONSUMER
 $noLocal = false;//what's this ?
 $noAck = false;
 $exclusive = false;// why is this option on consume ?
