@@ -41,17 +41,9 @@ $properties = array('content_type' => 'text/plain', 'delivery_mode' => AMQPMessa
 $body = json_encode(['accounts' => [['transactions' => [['id' => time()]]]]]);
 $msg = new AMQPMessage($body, $properties);
 
-// (without routing :routing key = queue_name)
 $mandatory = false; //  If this flag is set, the server will return an unroutable message with a Return method.
 // If this flag is zero, the server silently drops the message.
 $immediate = true; // If this flag is set, the server will return an undeliverable message with a Return method.
 // If this flag is zero, the server will queue the message, but with no guarantee that it will ever be consumed.
 
-// return listener doesn't seems to work...
-//$channel->set_return_listener(function($replyCode, $replyText, $exchangeName, $routingKey){
-//    var_dump($replyCode);
-//    var_dump($replyText);
-//    var_dump($exchangeName);
-//    var_dump($routingKey);
-//});
-$channel->basic_publish($msg, 'direct_exchange', $routingKey  ? 'orange' : 'first_queue');
+$channel->basic_publish($msg, 'direct_exchange', $routingKey  ? 'orange' : 'first_queue', $mandatory, $immediate);

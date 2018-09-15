@@ -22,13 +22,9 @@ $msg1 = new AMQPMessage($body, $properties);
 $body = 'message 2';
 $msg2 = new AMQPMessage($body, $properties);
 
-//$channel->basic_publish($msg1, '', $queueName);
-
 $channel->tx_select();
 $channel->batch_basic_publish($msg1, '', $queueName);
 $channel->batch_basic_publish($msg2, '', $queueName);
-
-//$channel->basic_publish($msg1);
 
 $channel->publish_batch();
 $channel->tx_commit();

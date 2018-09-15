@@ -1,3 +1,19 @@
+# Exchange 
+
+### exchange type
+- direct
+    - routingkey (optionnal)
+- topic
+- fanout
+- headers
+
+# PostPone message (using deadLetter)
+
+# Rpc
+
+# Transactions
+
+
 Note :
 
 On MacOS RabbitMQ was installed using a Docker : https://hub.docker.com/_/rabbitmq/
@@ -32,7 +48,7 @@ Trouver des réponses:
 - Qu'est -ce que le state d'une queue "ready / idle" ?
 
 
-
+# RabbitMQ API
 - basic_nack: manually unack a message
 - basic_reject: Was introduced before basic_nack, but is less powerful
 - batch_basic_publish: Prepare messages as a batch
