@@ -29,13 +29,13 @@ $noWait = false; //we want to wait for the response of the server
 $channel->queue_declare($queueName, $passive, $durable, $exclusive, $autoDelete, $noWait);
 
 $routingKey = false;
-$channel->queue_bind($queueName, 'direct_exchange',$routingKey ? 'orange': 'first_queue');
+$channel->queue_bind($queueName, 'direct_exchange',$routingKey ? 'orange': '');
 
 // ------- SECOND QUEUE
-$channel->queue_declare('second_queue', false, true, false, false, false);
-// routing key is optionnal
-$channel->queue_bind('second_queue', 'direct_exchange', $routingKey ? 'black' : null);
-$channel->queue_bind('second_queue', 'direct_exchange', $routingKey ? 'green': null);
+//$channel->queue_declare('second_queue', false, true, false, false, false);
+//// routing key is optionnal
+//$channel->queue_bind('second_queue', 'direct_exchange', $routingKey ? 'black' : null);
+//$channel->queue_bind('second_queue', 'direct_exchange', $routingKey ? 'green': null);
 
 $properties = array('content_type' => 'text/plain', 'delivery_mode' => AMQPMessage::DELIVERY_MODE_PERSISTENT);
 $body = json_encode(['accounts' => [['transactions' => [['id' => time()]]]]]);
@@ -43,7 +43,7 @@ $msg = new AMQPMessage($body, $properties);
 
 $mandatory = false; //  If this flag is set, the server will return an unroutable message with a Return method.
 // If this flag is zero, the server silently drops the message.
-$immediate = true; // If this flag is set, the server will return an undeliverable message with a Return method.
+$immediate = false; // If this flag is set, the server will return an undeliverable message with a Return method.
 // If this flag is zero, the server will queue the message, but with no guarantee that it will ever be consumed.
 
-$channel->basic_publish($msg, 'direct_exchange', $routingKey  ? 'orange' : 'first_queue', $mandatory, $immediate);
+$channel->basic_publish($msg, 'direct_exchange', $routingKey  ? 'orange' : '', $mandatory, $immediate);
